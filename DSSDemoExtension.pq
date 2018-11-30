@@ -1,4 +1,4 @@
-﻿// This file contains your Data Connector logic
+// This file contains your Data Connector logic
 section DSSDemoExtension;
 
 // Helper Fuction
@@ -57,144 +57,6 @@ GetData = (token,jobId) =>
                 [Delimiter=",", Encoding=1252, QuoteStyle=QuoteStyle.None])
     in
         Source;
-
-ExtractRaw = (token) =>
-    let
-        body = "{ ""ExtractionRequest"": {""@odata.type"": ""#ThomsonReuters.Dss.Api.Extractions.ExtractionRequests.TickHistoryTimeAndSalesExtractionRequest"", ""ContentFieldNames"": [
-""Auction - Exchange Time"",
-""Auction - Price"",
-""Auction - Qualifiers"",
-""Auction - Volume"",
-""Correction - Accumulated Volume"",
-""Correction - Ask Price"",
-""Correction - Bid Price"",
-""Correction - Buyer ID"",
-""Correction - Exchange Time"",
-""Correction - Exchange/Contributor ID"",
-""Correction - Market VWAP"",
-""Correction - Original Date"",
-""Correction - Original Exchange Time"",
-""Correction - Original Price"",
-""Correction - Original Sequence Number"",
-""Correction - Original Volume"",
-""Correction - PE Ratio"",
-""Correction - Price"",
-""Correction - Qualifiers"",
-""Correction - Seller ID"",
-""Correction - Sequence Number"",
-""Correction - Volume"",
-""Market Conditions - Qualifiers"",
-""Quote - Ask Implied Volatility"",
-""Quote - Ask Price"",
-""Quote - Ask Size"",
-""Quote - Ask Yield"",
-""Quote - Asset Swap Spread"",
-""Quote - Bench Price"",
-""Quote - Benchmark Spread"",
-""Quote - Bid Implied Volatility"",
-""Quote - Bid Price"",
-""Quote - Bid Size"",
-""Quote - Bid Tick"",
-""Quote - Bid Yield"",
-""Quote - BPV"",
-""Quote - Buyer ID"",
-""Quote - Contributor Location Code"",
-""Quote - Convexity"",
-""Quote - Crack"",
-""Quote - Date"",
-""Quote - Duration"",
-""Quote - Exchange Time"",
-""Quote - Exchange/Contributor ID"",
-""Quote - Forecast High"",
-""Quote - Forecast Low"",
-""Quote - Freight Price"",
-""Quote - High"",
-""Quote - Implied Volatility"",
-""Quote - ISMA Ask Yield"",
-""Quote - ISMA Bid Yield"",
-""Quote - Low"",
-""Quote - Lower Limit Price"",
-""Quote - Mid Price"",
-""Quote - Modified Duration"",
-""Quote - Number of Buyers"",
-""Quote - Number of Sellers"",
-""Quote - Open"",
-""Quote - Parity"",
-""Quote - Premium"",
-""Quote - Price"",
-""Quote - Qualifiers"",
-""Quote - Seller ID"",
-""Quote - Sequence Number"",
-""Quote - Swap Point"",
-""Quote - Swap Spread"",
-""Quote - Theoretical Price"",
-""Quote - Top"",
-""Quote - Upper Limit Price"",
-""Quote - Volume"",
-""Quote - Yield"",
-""Settlement Price - Date"",
-""Settlement Price - Price"",
-""Trade - Accumulated Volume"",
-""Trade - Actual"",
-""Trade - Ask Price"",
-""Trade - Ask Size"",
-""Trade - Ask Yield"",
-""Trade - Bench Price"",
-""Trade - Bid Price"",
-""Trade - Bid Size"",
-""Trade - Bid Yield"",
-""Trade - Block Trade"",
-""Trade - Buyer ID"",
-""Trade - Contributor Location Code"",
-""Trade - Crack"",
-""Trade - Date"",
-""Trade - Exchange Time"",
-""Trade - Exchange/Contributor ID"",
-""Trade - Forecast High"",
-""Trade - Forecast Low"",
-""Trade - Forecast"",
-""Trade - Freight Price"",
-""Trade - High"",
-""Trade - Implied Volatility"",
-""Trade - Low"",
-""Trade - Lower Limit Price"",
-""Trade - Market VWAP"",
-""Trade - Mid Price"",
-""Trade - Number of Forecasts"",
-""Trade - Offer"",
-""Trade - Open Interest"",
-""Trade - Open"",
-""Trade - Original Price"",
-""Trade - Original Volume"",
-""Trade - PE Ratio"",
-""Trade - Premium"",
-""Trade - Price"",
-""Trade - Prior"",
-""Trade - Qualifiers"",
-""Trade - Revised"",
-""Trade - Seller ID"",
-""Trade - Sequence Number"",
-""Trade - Tick Direction"",
-""Trade - Top"",
-""Trade - Turnover"",
-""Trade - Upper Limit Price"",
-""Trade - Volume"",
-""Trade - Yield""
-] , ""IdentifierList"": {""@odata.type"": ""#ThomsonReuters.Dss.Api.Extractions.ExtractionRequests.InstrumentIdentifierList"",""InstrumentIdentifiers"": [
-{""Identifier"": ""TRI.N"",
-""IdentifierType"": ""Ric""}
-] },""Condition"":{""MessageTimeStampIn"": ""GmtUtc"", ""ApplyCorrectionsAndCancellations"": false, ""ReportDateRangeType"": ""Range"", ""QueryStartDate"": ""2018-01-01T15:30:00.000Z"", ""QueryEndDate"": ""2018-01-30T15:30:00.000Z"", ""DisplaySourceRIC"": true }}}",
-
-        endpoint = "https://hosted.datascopeapi.reuters.com/RestApi/v1/Extractions/ExtractRaw",
-       
-        response = Web.Contents(endpoint, [Headers=[#"Authorization"=token, #"Content-Type"="application/json",#"Prefer"= "respond-async;wait=1"], Content=Text.ToBinary(body),ManualStatusHandling={400,202}]),
-        status = Value.Metadata(response)[Response.Status],
-
-        jobId=if status = 200 then Json.Document(response)[JobId]
-        else if status = 202 then CheckStatus(token,Value.Metadata(response)[Headers][#"Location"])
-        else Error.Record("HTTP Status",Text.From(status), Json.Document(response)[error][message])
-    in
-        jobId;
 
 ExtractTRTH_TimeSeries = (token, ric) =>
     let
@@ -283,7 +145,15 @@ ExtractDSS_Intraday= (token, ric) =>
             ""Condition"": { ""ScalableCurrency"": true }
             }
         }",
-        response = Web.Contents(endpoint, [Headers=[#"Authorization"=token, #"Content-Type"="application/json",#"Prefer"= "respond-async"], Content=Text.ToBinary(body),ManualStatusHandling={400,202},IsRetry=true]),
+        response = Web.Contents(
+                        endpoint, 
+                        [Headers=
+                            [#"Authorization"=token, 
+                             #"Content-Type"="application/json",
+                             #"Prefer"= "respond-async"], 
+                         Content=Text.ToBinary(body),
+                         ManualStatusHandling={400,202},
+                         IsRetry=true]),
         status = Value.Metadata(response)[Response.Status],
 
         jobId=if status = 200 then Json.Document(response)[JobId]
@@ -325,21 +195,6 @@ shared DSSDemoExtension.DSSIntraday = (Ricname as text) =>
     in
         source;
 
-[DataSource.Kind="DSSDemoExtension", Publish="DSSDemoExtension.Publish3"]
-shared DSSDemoExtension.ExtractRequestFromFile = (Ricname as text) =>
-    let 
-    DSSUserName = Extension.CurrentCredential()[Username],
-    DSSPassword = Extension.CurrentCredential()[Password],
-    currentdate = Date.ToText(DateTime.Date(DateTime.LocalNow())),
-    token = Login(DSSUserName,DSSPassword,currentdate),
-    jobId = ExtractRaw(token),
-    source = if Value.Is(jobId, type text) then
-        GetData(token,jobId)
-    else 
-        jobId
-    in
-        source;
-
 // Data Source Kind description
 DSSDemoExtension = [
     Authentication = [
@@ -360,16 +215,6 @@ DSSDemoExtension.Publish1 = [
 
 // Data Source UI publishing description
 DSSDemoExtension.Publish2 = [
-    Beta = true,
-    Category = "Other",
-    ButtonText = { Extension.LoadString("ButtonTitle2"), Extension.LoadString("ButtonHelp2") },
-    LearnMoreUrl = "https://powerbi.microsoft.com/",
-    SourceImage = DSSDemoExtension.Icons,
-    SourceTypeImage = DSSDemoExtension.Icons
-];
-
-// Data Source UI publishing description
-DSSDemoExtension.Publish3 = [
     Beta = true,
     Category = "Other",
     ButtonText = { Extension.LoadString("ButtonTitle2"), Extension.LoadString("ButtonHelp2") },
