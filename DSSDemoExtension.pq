@@ -58,7 +58,7 @@ GetData = (token,jobId) =>
     in
         Source;
 
-ExtractTRTH_TimeSeries = (token, ric) =>
+ExtractRTH_TimeSeries = (token, ric) =>
     let
         endpoint = "https://hosted.datascopeapi.reuters.com/RestApi/v1/Extractions/ExtractRaw",
         body = 
