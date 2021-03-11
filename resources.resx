@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonHelp1" xml:space="preserve">
-    <value>Connect to DataScope Select REST API to access Thomsonreuters TickHistory data</value>
+    <value>Connect to DataScope Select REST API to access TickHistory data</value>
   </data>
   <data name="ButtonHelp2" xml:space="preserve">
-    <value>Connect to DataScope Select REST API to access Thomsonreuters Datascope Select data</value>
+    <value>Connect to DataScope Select REST API to access Datascope Select data</value>
   </data>
   <data name="ButtonTitle1" xml:space="preserve">
-    <value>DSSDemoExtension-TRTH ElektronTimeSeries</value>
+    <value>DSSDemoExtension-RTH ElektronTimeSeries</value>
   </data>
   <data name="ButtonTitle2" xml:space="preserve">
     <value>DSSDemoExtension-DSS IntradayPricing</value>
