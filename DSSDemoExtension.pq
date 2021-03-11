@@ -163,7 +163,7 @@ ExtractDSS_Intraday= (token, ric) =>
         jobId;
 
 [DataSource.Kind="DSSDemoExtension", Publish="DSSDemoExtension.Publish1"]
-shared DSSDemoExtension.TRTHTimeSeries = (Ricname as text) =>
+shared DSSDemoExtension.RTHTimeSeries = (Ricname as text) =>
     let 
     DSSUserName = Extension.CurrentCredential()[Username],
     DSSPassword = Extension.CurrentCredential()[Password],
@@ -171,7 +171,7 @@ shared DSSDemoExtension.TRTHTimeSeries = (Ricname as text) =>
     //1)	Request authentication token
     token = Login(DSSUserName,DSSPassword,currentdate),
     //2)	Request historical data from the server, using an on demand request and 3)	Check the request status
-    jobId = ExtractTRTH_TimeSeries(token,Ricname),
+    jobId = ExtractRTH_TimeSeries(token,Ricname),
     //4)	Retrieve the data
     source = if Value.Is(jobId, type text) then
         GetData(token,jobId)
