@@ -65,7 +65,7 @@ ExtractRTH_TimeSeries = (token, ric) =>
         "{
             ""ExtractionRequest"": 
             {
-                ""@odata.type"": ""#ThomsonReuters.Dss.Api.Extractions.ExtractionRequests.ElektronTimeseriesExtractionRequest"",
+                ""@odata.type"": ""#DataScope.Select.Api.Extractions.ExtractionRequests.ElektronTimeseriesExtractionRequest"",
                 ""ContentFieldNames"": 
                 [
                     ""Instrument ID"",
@@ -79,7 +79,7 @@ ExtractRTH_TimeSeries = (token, ric) =>
                 ],
                 ""IdentifierList"": 
                 {
-                    ""@odata.type"": ""#ThomsonReuters.Dss.Api.Extractions.ExtractionRequests.InstrumentIdentifierList"",
+                    ""@odata.type"": ""#DataScope.Select.Api.Extractions.ExtractionRequests.InstrumentIdentifierList"",
                     ""InstrumentIdentifiers"":
                     [
                         {
@@ -119,7 +119,7 @@ ExtractDSS_Intraday= (token, ric) =>
     "{
       ""ExtractionRequest"": 
           {
-            ""@odata.type"": ""#ThomsonReuters.Dss.Api.Extractions.ExtractionRequests.IntradayPricingExtractionRequest"",
+            ""@odata.type"": ""#DataScope.Select.Api.Extractions.ExtractionRequests.IntradayPricingExtractionRequest"",
             ""ContentFieldNames"": [
                 ""RIC"",
                 ""Ask Price"",
@@ -135,7 +135,7 @@ ExtractDSS_Intraday= (token, ric) =>
                 ""Last Update Time""
             ],
             ""IdentifierList"": {
-                ""@odata.type"": ""#ThomsonReuters.Dss.Api.Extractions.ExtractionRequests.InstrumentIdentifierList"",  
+                ""@odata.type"": ""#DataScope.Select.Api.Extractions.ExtractionRequests.InstrumentIdentifierList"",  
                 ""InstrumentIdentifiers"": [
                     { ""Identifier"": ""JPY="", ""IdentifierType"": ""Ric"" },
                     { ""Identifier"": ""EUR="", ""IdentifierType"": ""Ric"" },
