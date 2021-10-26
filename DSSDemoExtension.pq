@@ -47,7 +47,7 @@ CheckStatus = (token,location) =>
 
 GetData = (token,jobId) =>
     let
-        endpoint = "https://hosted.datascopeapi.reuters.com/RestApi/v1/Extractions/RawExtractionResults('" & jobId & "')/$value",
+        endpoint = "https://selectapi.datascope.refinitiv.com/RestApi/v1/Extractions/RawExtractionResults('" & jobId & "')/$value",
         Source = Csv.Document(Web.Contents(
                 endpoint, 
                 [Headers=
@@ -60,7 +60,7 @@ GetData = (token,jobId) =>
 
 ExtractRTH_TimeSeries = (token, ric) =>
     let
-        endpoint = "https://hosted.datascopeapi.reuters.com/RestApi/v1/Extractions/ExtractRaw",
+        endpoint = "https://selectapi.datascope.refinitiv.com/RestApi/v1/Extractions/ExtractRaw",
         body = 
         "{
             ""ExtractionRequest"": 
