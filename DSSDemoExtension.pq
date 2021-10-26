@@ -15,7 +15,7 @@ Value.WaitFor = (producer as function, interval as function, optional count as n
 // Request authentication token
 Login = (user,pass,currenttime) =>
     let
-        endpoint = "https://hosted.datascopeapi.reuters.com/RestApi/v1/Authentication/RequestToken",
+        endpoint = "https://selectapi.datascope.refinitiv.com/RestApi/v1/Authentication/RequestToken",
         body = "{""Credentials"": {""Username"": """ & user & """,""Password"": """ & pass & """}}",
         response=Web.Contents(endpoint,[
                         Headers=[#"Content-Type"="application/json",
