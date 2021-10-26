@@ -114,7 +114,7 @@ ExtractRTH_TimeSeries = (token, ric) =>
 
 ExtractDSS_Intraday= (token, ric) =>
     let
-        endpoint = "https://hosted.datascopeapi.reuters.com/RestApi/v1/Extractions/ExtractRaw",
+        endpoint = "https://selectapi.datascope.refinitiv.com/RestApi/v1/Extractions/ExtractRaw",
         body = 
     "{
       ""ExtractionRequest"": 
